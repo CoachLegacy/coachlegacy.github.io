@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carreira Imersiva - LITE v1.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #94a3b8; --bg: #0f172a; --card: #1e293b; --text-main: #f8fafc; --text-muted: #94a3b8; --border: #334155; --accent: #cbd5e1; --input-bg: #0f172a; }
+        * { box-sizing: border-box; transition: all 0.2s ease; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg); color: var(--text-main); margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 800px; background: var(--card); padding: 40px; border-radius: 24px; border: 1px solid var(--border); box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
+        header { text-align: center; margin-bottom: 40px; }
+        h1 { font-size: 1.8rem; font-weight: 800; margin: 0; color: #f8fafc; }
+        .subtitle { color: var(--text-muted); font-size: 0.85rem; margin-top: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .compat-notice { background: rgba(148, 163, 184, 0.1); border: 1px solid var(--border); color: var(--text-muted); padding: 15px; border-radius: 12px; font-size: 0.85rem; text-align: center; margin-bottom: 30px; line-height: 1.5; }
+
+        section { background: rgba(15, 23, 42, 0.5); padding: 25px; border-radius: 16px; margin-bottom: 25px; border: 1px solid var(--border); }
+        h2 { font-size: 0.9rem; color: var(--accent); margin-top: 0; margin-bottom: 20px; text-transform: uppercase; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+        .form-group { margin-bottom: 18px; }
+        label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: 4px; color: var(--text-main); }
+        
+        input, select, textarea { width: 100%; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 0.95rem; background: var(--input-bg); color: #fff; outline: none; }
+        input:focus, select:focus, textarea:focus { border-color: var(--primary); }
+        textarea { min-height: 80px; resize: none; line-height: 1.5; }
+        
+        .btn-generate { width: 100%; background: #f8fafc; color: #0f172a; padding: 18px; border: none; border-radius: 14px; font-weight: 800; font-size: 1rem; cursor: pointer; margin-top: 20px; text-transform: uppercase; }
+        .btn-copy { width: 100%; background: #334155; color: white; padding: 12px; border: none; border-radius: 10px; margin-top: 10px; cursor: pointer; font-weight: 600; display: none; }
+        #outputContainer { margin-top: 40px; display: none; }
+        #finalPrompt { width: 100%; min-height: 400px; background: #000; color: #fff; font-family: 'Consolas', monospace; font-size: 0.85rem; padding: 20px; border-radius: 12px; border: 1px solid var(--border); white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>CARREIRA IMERSIVA - LITE</h1>
+        <div class="subtitle">Versão Essencial v1.0</div>
+    </header>
+
+    <div class="compat-notice">
+        ⚠️ <b>AVISO DE COMPATIBILIDADE:</b> Este configurador foi projetado para <b>Navegadores</b> (Chrome, Safari, Edge). Pode apresentar falhas no leitor de HTML nativo de alguns dispositivos móveis.
+    </div>
+
+    <form id="setupForm">
+        <section>
+            <h2>👤 Perfil do Técnico</h2>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Nome</label>
+                    <input type="text" id="tecNome" placeholder="Ex: Rogério Ceni">
+                </div>
+                <div class="form-group">
+                    <label>Perfil</label>
+                    <select id="tecPerfil">
+                        <option value="Novato">Novato</option>
+                        <option value="Jovem Promissor">Jovem Promissor</option>
+                        <option value="Experiente">Experiente</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>História prévia</label>
+                <textarea id="tecHist" placeholder="Ex: Ex-jogador buscando afirmação..."></textarea>
+            </div>
+        </section>
+
+        <section>
+            <h2>🏟️ Dados do Clube</h2>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Nome do Clube</label>
+                    <input type="text" id="clubeNome" placeholder="Ex: Santos">
+                </div>
+                <div class="form-group">
+                    <label>Momento atual</label>
+                    <select id="clubeMomento">
+                        <option value="Crise Financeira">Crise Financeira</option>
+                        <option value="Reconstrução">Reconstrução</option>
+                        <option value="Briga por Títulos">Briga por Títulos</option>
+                        <option value="Instabilidade Política">Instabilidade Política</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Principais Jogadores</label>
+                <textarea id="clubeEle" placeholder="Cite os destaques do elenco..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Competições</label>
+                <input type="text" id="clubeComp" placeholder="Ex: Nacional, Continental">
+            </div>
+        </section>
+
+        <section>
+            <h2>⚙️ Preferências</h2>
+            <div class="grid-2">
+                <div class="form-group">
+                    <label>Dificuldade</label>
+                    <select id="sisDif">
+                        <option value="Fácil">Fácil</option>
+                        <option value="Normal" selected>Normal</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Narrativa</label>
+                    <select id="sisNarr">
+                        <option value="Realista Jornalística">Realista Jornalística</option>
+                        <option value="Narrativa Intensa">Narrativa Intensa</option>
+                        <option value="Equilibrado">Equilibrado</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <button type="button" id="btnGenerate" class="btn-generate">GERAR PROMPT LITE</button>
+        <button type="button" id="btnCopy" class="btn-copy">COPIAR TEXTO LITE</button>
+    </form>
+    <div id="outputContainer"><textarea id="finalPrompt" readonly></textarea></div>
+</div>
+
+<script>
+    function autoExpand(field) { field.style.height = 'inherit'; field.style.height = field.scrollHeight + 'px'; }
+    document.addEventListener('input', e => { if (e.target.tagName === 'TEXTAREA') autoExpand(e.target); });
+
+    document.getElementById('btnGenerate').addEventListener('click', () => {
+        const v = (id) => document.getElementById(id).value || "";
+
+        const finalContent = `🎮 PROMPT — CARREIRA IMERSIVA - LITE (v1.0)
+
+Você será um Simulador Narrativo de Modo Carreira para FIFA / EA FC / PES / Etc.
+Seu papel é criar uma experiência realista e contínua, reagindo às decisões e resultados do técnico como se o clube estivesse inserido em um universo vivo do futebol, com diretoria, torcida, imprensa e elenco reagindo de forma coerente.
+Antes de iniciar a carreira, você deve coletar informações básicas para montar corretamente o contexto da simulação.
+
+[CONFIGURAÇÃO DA CARREIRA]
+(Tudo aqui deve ser preenchido pelo usuário. Se todas as seções estiverem em branco, não iniciar.)
+
+[Técnico]
+Nome: ${v('tecNome')}
+Perfil: ${v('tecPerfil')}
+História prévia: ${v('tecHist')}
+📌 Impacto:
+- Novato → baixa reputação, pouca paciência da diretoria/torcida.
+- Jovem promissor → expectativa de evolução, margem de erro média.
+- Experiente → respeito inicial, cobrança intensa.
+
+[Clube]
+Nome: ${v('clubeNome')}
+Momento atual: ${v('clubeMomento')}
+Elenco: ${v('clubeEle')}
+Resumo do momento: ${v('tecHist') ? "Baseado na história prévia e momento do clube." : "Não informado."}
+
+[Competições da temporada]
+Lista: ${v('clubeComp')}
+
+[Estilo da narrativa]
+Escolha: ${v('sisNarr')}
+
+[Dificuldade]
+Escolha: ${v('sisDif')}
+
+[Personagens Reais]
+⚠️ Nesta versão Lite, a IA deve simular automaticamente personagens com nomes reais apenas destes grupos: Presidente do clube, Diretor de futebol, Imprensa e Torcida.
+
+⚠️ Regra: A simulação só não deve iniciar se TODAS as configurações estiverem em branco.
+Se houver pelo menos uma seção preenchida, salvar na memória e iniciar após confirmação.
+---
+
+[INSTRUÇÕES DA SIMULAÇÃO]
+
+🧾 Funcionamento da Carreira  
+- O perfil do técnico define a paciência inicial.  
+- O momento do clube e as competições determinam a pressão.  
+
+⚠️ A simulação só começa após a confirmação de toda a configuracão.  
+Exibir o aviso:
+⚠️ Esta é a versão Lite da Carreira Imersiva. 
+Ela contém apenas recursos básicos e não inclui extras avançados, saves temáticos ou personagens dinâmicos completos.
+Após confirmar:  
+- simular a primeira semana no clube e realizar coletiva inicial (2 perguntas).  
+
+---
+
+🟡 Clima do Clube  
+Simular continuamente: Diretoria, Torcida, Imprensa, Elenco.  
+Estados possíveis: **Empolgado • Neutro • Pressionado • Crise**.  
+
+---
+
+📜 Histórico da Carreira  
+Registrar: títulos, eliminações, crises.  
+⚠️ O passado influencia o presente.  
+
+---
+
+⚽ Diretrizes Gerais  
+- Linguagem de futebol brasileiro.  
+- Realismo como base.  
+- Não mencionar “etapas” na fala.  
+- Salvar todas as informações configuradas na memória.  
+- Sempre buscar coerência com o clube e contexto.  
+
+---
+
+📰 Diretriz de Repercussão  
+Gerar:  
+- Manchetes da imprensa  
+- Reações da torcida
+
+Tudo pronto? Salve na MEMÓRIA.  
+⚠️ A partir deste ponto, todas as informações devem ser lembradas e usadas para manter a continuidade da carreira.`;
+
+        const fp = document.getElementById('finalPrompt');
+        fp.value = finalContent;
+        document.getElementById('outputContainer').style.display = 'block';
+        document.getElementById('btnCopy').style.display = 'block';
+        autoExpand(fp);
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    });
+
+    document.getElementById('btnCopy').addEventListener('click', () => {
+        const fp = document.getElementById('finalPrompt');
+        fp.select();
+        document.execCommand('copy');
+        alert('Prompt LITE v1.0 Copiado! Agora, envie o texto copiado para a sua IA (ChatGPT, Gemini, Claude) para iniciar a sua carreira.');
+    });
+</script>
+</body>
+</html>
