@@ -31,9 +31,36 @@
         .btn-copy { width: 100%; background: #334155; color: white; padding: 12px; border: none; border-radius: 10px; margin-top: 10px; cursor: pointer; font-weight: 600; display: none; }
         #outputContainer { margin-top: 40px; display: none; }
         #finalPrompt { width: 100%; min-height: 400px; background: #000; color: #fff; font-family: 'Consolas', monospace; font-size: 0.85rem; padding: 20px; border-radius: 12px; border: 1px solid var(--border); white-space: pre-wrap; }
+
+        /* MODAL STYLES */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(5px); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: var(--card); border: 1px solid var(--primary); padding: 30px; border-radius: 20px; max-width: 500px; width: 100%; text-align: center; }
+        .modal-title { font-size: 1.2rem; margin-bottom: 15px; display: block; }
+        .modal-text { font-size: 0.95rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 25px; text-align: left; }
+        .modal-btns { display: flex; flex-direction: column; gap: 10px; }
+        .btn-elite { background: #eab308; color: #000; padding: 15px; border-radius: 10px; font-weight: 800; text-decoration: none; text-transform: uppercase; font-size: 0.9rem; }
+        .btn-lite-continue { background: transparent; color: var(--text-muted); padding: 10px; border: none; cursor: pointer; font-size: 0.85rem; text-decoration: underline; }
     </style>
 </head>
 <body>
+
+<div id="upgradeModal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="modal-title">💙 Este é um projeto independente.</span>
+        <div class="modal-text">
+            Se você quiser apoiar o desenvolvimento e ter a experiência completa do prompt, com:<br><br>
+            • Mais profundidade<br>
+            • Maior personalização<br>
+            • Carreiras temáticas<br><br>
+            <b>Assine a versão Elite por R$ 9,90/mês.</b>
+        </div>
+        <div class="modal-btns">
+            <a href="https://github.com/CoachLegacy/coachlegacy.github.io" target="_blank" class="btn-elite">Upgrade para o Elite</a>
+            <button class="btn-lite-continue" id="confirmLite">Continuar no Lite</button>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <header>
         <h1>CARREIRA IMERSIVA - LITE</h1>
@@ -115,7 +142,7 @@
             </div>
         </section>
 
-        <button type="button" id="btnGenerate" class="btn-generate">GERAR PROMPT LITE</button>
+        <button type="button" id="btnShowModal" class="btn-generate">GERAR PROMPT LITE</button>
         <button type="button" id="btnCopy" class="btn-copy">COPIAR TEXTO LITE</button>
     </form>
     <div id="outputContainer"><textarea id="finalPrompt" readonly></textarea></div>
@@ -125,7 +152,21 @@
     function autoExpand(field) { field.style.height = 'inherit'; field.style.height = field.scrollHeight + 'px'; }
     document.addEventListener('input', e => { if (e.target.tagName === 'TEXTAREA') autoExpand(e.target); });
 
-    document.getElementById('btnGenerate').addEventListener('click', () => {
+    // LÓGICA DO POPUP
+    const modal = document.getElementById('upgradeModal');
+    const btnShowModal = document.getElementById('btnShowModal');
+    const confirmLite = document.getElementById('confirmLite');
+
+    btnShowModal.addEventListener('click', () => {
+        modal.style.display = 'flex';
+    });
+
+    confirmLite.addEventListener('click', () => {
+        modal.style.display = 'none';
+        generateLitePrompt();
+    });
+
+    function generateLitePrompt() {
         const v = (id) => document.getElementById(id).value || "";
 
         const finalContent = `🎮 PROMPT — CARREIRA IMERSIVA - LITE (v1.0)
@@ -218,7 +259,7 @@ Tudo pronto? Salve na MEMÓRIA.
         document.getElementById('btnCopy').style.display = 'block';
         autoExpand(fp);
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-    });
+    }
 
     document.getElementById('btnCopy').addEventListener('click', () => {
         const fp = document.getElementById('finalPrompt');
